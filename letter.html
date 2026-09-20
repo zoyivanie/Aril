@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Nur Mazzatul Husna</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Poppins:wght@300;400;600;700&family=Sacramento&display=swap" rel="stylesheet">
+
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #fff5f7 0%, #fde2e4 50%, #ffcad4 100%);
+            color: #4a4a4a;
+            overflow-x: hidden;
+        }
+
+        .font-handwriting {
+            font-family: 'Caveat', cursive;
+        }
+
+        .font-cursive {
+            font-family: 'Sacramento', cursive;
+        }
+
+        /* Floating Hearts Background Animation */
+        .heart-bg {
+            position: fixed;
+            top: -10vh;
+            pointer-events: none;
+            animation: floatHeart 12s linear infinite;
+            opacity: 0.6;
+            z-index: 0;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(115vh) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Envelope Styling */
+        .envelope-wrapper {
+            perspective: 1000px;
+        }
+
+        .envelope {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            height: 280px;
+            background: #ff758f;
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(230, 57, 70, 0.25);
+            cursor: pointer;
+            transition: transform 0.6s ease;
+        }
+
+        .envelope:hover {
+            transform: translateY(-5px);
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 225px solid transparent;
+            border-right: 225px solid transparent;
+            border-top: 150px solid #ff4d6d;
+            transform-origin: top;
+            transition: transform 0.6s ease;
+            z-index: 3;
+        }
+
+        @media (max-width: 500px) {
+            .envelope-flap {
+                border-left-width: 45vw;
+                border-right-width: 45vw;
+                border-top-width: 30vw;
+            }
+        }
+
+        .envelope.open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .letter-content {
+            position: absolute;
+            bottom: 10px;
+            left: 5%;
+            width: 90%;
+            height: 85%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.8s ease 0.3s;
+            z-index: 2;
+            overflow-y: auto;
+        }
+
+        .envelope.open .letter-content {
+            transform: translateY(-120px) scale(1.05);
+            z-index: 4;
+            height: 380px;
+        }
+
+        /* Polaroid Card Effects */
+        .polaroid {
+            background: white;
+            padding: 12px 12px 24px 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+            transition: all 0.3s ease;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.04) rotate(0deg) !important;
+            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.3);
+            z-index: 20;
+        }
+
+        /* Candle Flame Animation */
+        .flame {
+            width: 16px;
+            height: 26px;
+            background: linear-gradient(#ffea00, #ff7b00);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 15px #ff7b00, 0 0 25px #ffea00;
+            animation: flicker 0.8s infinite alternate;
+            cursor: pointer;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
+            100% { transform: scale(1.15) rotate(2deg); opacity: 1; }
+        }
+
+        .flame.blown-out {
+            display: none;
+        }
+
+        .smoke {
+            width: 8px;
+            height: 20px;
+            background: rgba(200, 200, 200, 0.6);
+            border-radius: 50%;
+            animation: smokeRise 1.5s forwards;
+            display: none;
+        }
+
+        @keyframes smokeRise {
+            0% { opacity: 0.8; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-40px) scale(3); }
+        }
+
+        /* Vintage Frame Style */
+        .vintage-border {
+            border: 12px solid #fff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            background-color: #fff;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #ffe5ec;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff758f;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen pb-24">
+
+    <div id="heart-container" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- TOP SECTION (HERO SECTION) -->
+    <header class="relative z-10 pt-8 px-4 max-w-4xl mx-auto text-center">
+        <!-- Floating Romantic Banner Header -->
+        <div class="inline-block bg-white/80 backdrop-blur-md px-6 py-2 rounded-full shadow-lg mb-6 border border-rose-200">
+            <span class="text-rose-600 font-semibold tracking-wider text-sm md:text-base">
+                <i class="fas fa-heart text-rose-500 mr-2"></i>SELAMAT ULANG TAHUN UNTUK PACAR TERSAYANG!
+            </span>
+        </div>
+
+        <!-- Main Poster Image Container (WhatsApp Image 2026-09-20 at 19.09.03.jpeg) -->
+        <div class="vintage-border rounded-2xl overflow-hidden shadow-2xl relative transform hover:scale-[1.01] transition-transform duration-500">
+            <img src="3.jpeg" 
+                 onerror="this.onerror=null; this.src='https://placehold.co/800x1200/d8b4e2/ffffff?text=Main+Birthday+Poster+(WhatsApp+Image+2026-09-20+at+19.09.03_2.jpeg)';" 
+                 alt="Poster Ulang Tahun Utama - Nur Mazzatul Husna" 
+                 class="w-full h-auto object-cover max-h-[85vh] mx-auto rounded-lg">
+        </div>
+    </header>
+
+
+    <!-- MIDDLE SECTION: POTRET KESAYANGAN & INTERACTIVE GAMES -->
+    <main class="relative z-10 max-w-5xl mx-auto px-4 mt-16 space-y-20">
+
+        <!-- Photo Collage & Bouquet Title Section -->
+        <section class="bg-white/70 backdrop-blur-md p-6 md:p-10 rounded-3xl shadow-xl border border-rose-100">
+            <div class="text-center mb-10">
+                <h2 class="text-2xl md:text-4xl font-extrabold text-gray-800 tracking-wide uppercase">
+                    SESI POTRET KESAYANGAN
+                </h2>
+                <h3 class="text-xl md:text-3xl font-bold text-rose-500 font-handwriting mt-1">
+                    “ARIEL MIFTAHUDDIN”
+                </h3>
+                <div class="w-24 h-1 bg-rose-400 mx-auto mt-3 rounded-full"></div>
+            </div>
+
+            <!-- Photos Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                
+                <!-- Left Grid Photos -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="polaroid transform -rotate-2 rounded-xl">
+                        <img src="9.jpeg" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/300x300/ffcad4/4a4a4a?text=Foto+Ariel+1';" 
+                             alt="Foto Kesayangan" class="w-full h-40 object-cover rounded">
+                    </div>
+                    <div class="polaroid transform rotate-3 rounded-xl">
+                        <img src="11.jpeg" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/300x300/fde2e4/4a4a4a?text=Foto+Ariel+2';" 
+                             alt="Foto Kesayangan" class="w-full h-40 object-cover rounded">
+                    </div>
+                    <div class="polaroid transform rotate-2 rounded-xl">
+                        <img src="12.jpeg" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/300x300/ffb5a7/4a4a4a?text=Foto+Ariel+3';" 
+                             alt="Foto Kesayangan" class="w-full h-40 object-cover rounded">
+                    </div>
+                    <div class="polaroid transform -rotate-3 rounded-xl">
+                        <img src="13.jpeg" 
+                             onerror="this.onerror=null; this.src='https://placehold.co/300x300/f8edeb/4a4a4a?text=Foto+Ariel+4';" 
+                             alt="Foto Kesayangan" class="w-full h-40 object-cover rounded">
+                    </div>
+                </div>
+
+                <!-- Right Side Interactive Bouquet & Note -->
+                <div class="flex flex-col items-center justify-center text-center p-6 bg-rose-50/80 rounded-2xl border border-rose-200">
+                    <div class="text-7xl mb-4 animate-bounce">💐</div>
+                    <p class="font-cursive text-4xl text-rose-600 mb-2">i love u forever 💕</p>
+                    <p class="text-sm text-gray-600 italic">"Terima kasih telah menghiasi hariku dengan senyuman dan kebaikanmu."</p>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- INTERACTIVE CAKE SECTION -->
+        <section class="bg-gradient-to-b from-rose-100 to-pink-200 p-8 rounded-3xl shadow-xl text-center relative overflow-hidden border border-rose-300">
+            <h3 class="text-2xl md:text-3xl font-bold text-rose-800 mb-2">
+                🎂 Tiup Lilin Ulang Tahunmu! 🎂
+            </h3>
+            <p class="text-gray-600 mb-8 text-sm md:text-base">Klik pada nyala lilin atau tombol di bawah untuk membuat permohonan!</p>
+
+            <!-- Cake Visual -->
+            <div class="relative w-64 h-64 mx-auto flex flex-col items-center justify-end pb-4">
+                <!-- Candle Flame & Smoke -->
+                <div id="candle-wrapper" class="relative bottom-4 cursor-pointer z-20 flex flex-col items-center" onclick="blowCandle()">
+                    <div id="flame" class="flame"></div>
+                    <div id="smoke" class="smoke"></div>
+                    <!-- Candle Stick -->
+                    <div class="w-4 h-14 bg-gradient-to-b from-yellow-200 to-pink-400 rounded-t-sm border border-yellow-300"></div>
+                </div>
+
+                <!-- Cake Layers -->
+                <!-- Top Layer -->
+                <div class="w-36 h-16 bg-pink-300 rounded-t-2xl relative shadow-md flex justify-center items-center">
+                    <div class="absolute top-0 w-full h-4 bg-white/80 rounded-t-2xl"></div>
+                    <span class="text-xs font-bold text-rose-700 tracking-widest uppercase">21 SPOOKY</span>
+                </div>
+                <!-- Middle Layer -->
+                <div class="w-48 h-16 bg-rose-400 relative shadow-md flex justify-center items-center">
+                    <div class="absolute top-0 w-full h-4 bg-pink-100"></div>
+                    <div class="flex space-x-2">
+                        <span class="text-xs text-white">❤️</span>
+                        <span class="text-xs text-white">✨</span>
+                        <span class="text-xs text-white">❤️</span>
+                    </div>
+                </div>
+                <!-- Cake Base Layer -->
+                <div class="w-60 h-20 bg-rose-500 rounded-b-2xl relative shadow-lg flex justify-center items-center">
+                    <div class="absolute top-0 w-full h-5 bg-pink-200"></div>
+                    <p class="text-white font-bold font-handwriting text-2xl tracking-wide">MAZZATUL HUSNA</p>
+                </div>
+                <!-- Plate -->
+                <div class="w-72 h-4 bg-gray-200 rounded-full shadow-md mt-1"></div>
+            </div>
+
+            <!-- Blow Button -->
+            <button onclick="blowCandle()" class="mt-8 px-6 py-3 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-full shadow-lg transform hover:scale-105 transition-all">
+                ✨ Tiup Lilin Sekarang ✨
+            </button>
+            <p id="wish-message" class="hidden mt-4 text-rose-800 font-semibold font-handwriting text-2xl animate-pulse">
+                🎉 Semoga semua impian dan doamu terkabul, Baby! 💕
+            </p>
+        </section>
+
+
+        <!-- POP THE HEART BALLOON GAME -->
+        <section class="bg-white/80 backdrop-blur-md p-6 md:p-8 rounded-3xl shadow-xl text-center border border-pink-200">
+            <h3 class="text-2xl font-bold text-rose-700 mb-2">🎈 Pop-The-Heart Balloons! 🎈</h3>
+            <p class="text-xs md:text-sm text-gray-600 mb-6">Klik balon-balon cinta di bawah ini untuk memecahkannya dan mengumpulkan ucapan manis!</p>
+
+            <div id="balloon-area" class="relative w-full h-64 bg-pink-50/50 rounded-2xl border-2 border-dashed border-rose-200 overflow-hidden flex items-center justify-around">
+                <!-- Interactive Balloons Generated via JS -->
+            </div>
+            <p id="score-board" class="mt-4 text-sm font-semibold text-rose-600">Balon Dipecahkan: <span id="pop-count">0</span> ❤️</p>
+        </section>
+
+
+        <!-- INTERACTIVE 3D ENVELOPE LOVE LETTER -->
+        <section class="flex flex-col items-center justify-center my-12">
+            <h3 class="text-2xl md:text-3xl font-bold text-rose-700 mb-4 text-center">
+                ✉️ Surat Cinta Spesial (Klik Surat Untuk Membuka)
+            </h3>
+            
+            <div class="envelope-wrapper my-8 w-full flex justify-center">
+                <div id="envelope" class="envelope" onclick="toggleEnvelope()">
+                    <div class="envelope-flap"></div>
+                    <div class="letter-content text-left">
+                        <h4 class="font-bold text-rose-600 text-lg border-b pb-2 mb-2">Untuk Sayangku, Baby...</h4>
+                        <p class="text-xs md:text-sm text-gray-700 leading-relaxed font-sans">
+                            baby... makasih banyakk yaa makasihh untuk semua hal baik yang baby lakukan di hubungan kita ini. I berterimakasih sangatt, makasih juga udah bertahan dengan i dengan sifat i. Terima kasih banyak yaa babyy.
+                            <br><br>
+                            11 bulan ini udah kita lalui dan bertambahnya masing-masing umur kita, semoga Allah selalu kasih cara terbaik buat kita ya babyy. I tak pandai merangkai banyak kata baby, i cuman bisa bilang makasih udah hadir di hidup i ini.
+                            <br><br>
+                            I sayang baby, selamat ulang tahun ya babyy manusia baik cantik nan comel yang i cintaii. <strong>I love u forever baby kuu 💕💕</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-rose-400 italic">Klik amplop di atas untuk membaca pesan utuh!</p>
+        </section>
+
+    </main>
+
+
+    <!-- BOTTOM SECTION: HEARTFELT NOTE -->
+    <footer class="relative z-10 max-w-4xl mx-auto px-4 mt-16 mb-20">
+        <div class="bg-stone-900 text-stone-200 p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden border border-amber-900/40">
+            <!-- Vintage Grain Overlay Effect -->
+            <div class="absolute inset-0 bg-repeat opacity-10 pointer-events-none" style="background-image: url('https://www.transparenttextures.com/patterns/stardust.png');"></div>
+
+            <h3 class="text-2xl md:text-3xl font-bold text-amber-200 text-center font-handwriting mb-6">
+                ~ Dari Hati Terdalam ~
+            </h3>
+
+            <p class="text-sm md:text-base leading-relaxed text-stone-300 font-light text-center max-w-2xl mx-auto">
+                "maaf se maaf maaf nya ya baby kuu, i cuman bisa rayain lewat kata kata yang i rangkai dari dalam hati i yang dalam untuk hari dimana bertambah nya umur baby ini, untuk sekarang cuman ni yang i mampu doakan kedepanya i bisa buat yang lebih mewah dan secara langsung ya babyy sayangg, semoga apa yang i buat ini bisa buat baby bahagia di hari penting dalam hidup baby ini, maaf ya baby hehe i cuma bisa buat ini je tapi asal baby tau di dalam hati i ni baby semua tauu, baby jangan sering sedih sedih ya baby, baby harus selalu happy senyum karena kecantikan baby dan senyum baby tuu berharga tauu hehe, baby sekali lagi terimakasih banyak yaaa makasih sangatt tauu."
+            </p>
+
+            <div class="mt-8 text-center border-t border-stone-800 pt-6">
+                <p class="font-handwriting text-2xl text-amber-300">Ariel miftahuddin</p>
+                <p class="text-xs text-stone-500 mt-1">21 September 2006 • Nur Mazzatul Husna Binti Mazlan</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- FLOATING MUSIC PLAYER -->
+    <div class="fixed bottom-4 right-4 z-50 bg-white/90 backdrop-blur-md p-3 px-4 rounded-full shadow-2xl border border-rose-300 flex items-center space-x-3">
+        <button id="play-btn" onclick="toggleAudio()" class="w-10 h-10 bg-rose-500 hover:bg-rose-600 text-white rounded-full flex items-center justify-center transition-all shadow-md">
+            <i id="play-icon" class="fas fa-play text-sm"></i>
+        </button>
+        <div class="text-left pr-2">
+            <p class="text-xs font-bold text-gray-800">Until I Found You</p>
+            <p class="text-[10px] text-gray-500">Stephen Sanchez</p>
+        </div>
+        <!-- Audio Source (Using Royalty-Free Romantic Audio sample) -->
+        <audio id="bg-music" loop>
+            <source src="lagu.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+
+    <script>
+        // 1. Floating Hearts Animation Logic
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 5 + 7 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            document.getElementById('heart-container').appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 12000);
+        }
+        setInterval(createHeart, 500);
+
+        // 2. Candle Blowing Logic
+        let isBlown = false;
+        function blowCandle() {
+            if (isBlown) return;
+            isBlown = true;
+
+            document.getElementById('flame').classList.add('blown-out');
+            document.getElementById('smoke').style.display = 'block';
+            document.getElementById('wish-message').classList.remove('hidden');
+
+            // Trigger Confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
+
+        // 3. Envelope Toggle
+        function toggleEnvelope() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.toggle('open');
+        }
+
+        // 4. Pop Balloon Mini Game
+        let poppedCount = 0;
+        const balloonArea = document.getElementById('balloon-area');
+        const balloonColors = ['#ff758f', '#ff4d6d', '#ff8fa3', '#ffb5a7', '#f72585'];
+
+        function spawnBalloons() {
+            balloonArea.innerHTML = '';
+            for (let i = 0; i < 5; i++) {
+                const balloon = document.createElement('div');
+                balloon.className = 'cursor-pointer transform hover:scale-110 transition-transform flex flex-col items-center justify-center';
+                balloon.style.color = balloonColors[i % balloonColors.length];
+                balloon.innerHTML = `
+                    <div class="text-5xl filter drop-shadow">🎈</div>
+                    <span class="text-[10px] font-bold text-gray-500">Klik aku!</span>
+                `;
+                balloon.onclick = () => {
+                    poppedCount++;
+                    document.getElementById('pop-count').innerText = poppedCount;
+                    balloon.style.visibility = 'hidden';
+                    confetti({
+                        particleCount: 20,
+                        spread: 40,
+                        origin: { y: 0.7 }
+                    });
+                };
+                balloonArea.appendChild(balloon);
+            }
+        }
+        spawnBalloons();
+
+        // 5. Audio Player Toggle Logic
+        const music = document.getElementById('bg-music');
+        const playBtn = document.getElementById('play-btn');
+        const playIcon = document.getElementById('play-icon');
+
+        function toggleAudio() {
+            if (music.paused) {
+                music.play();
+                playIcon.classList.remove('fa-play');
+                playIcon.classList.add('fa-pause');
+            } else {
+                music.pause();
+                playIcon.classList.remove('fa-pause');
+                playIcon.classList.add('fa-play');
+            }
+        }
+    </script>
+</body>
+</html>
